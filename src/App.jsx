@@ -16,7 +16,7 @@ import HostVansPhotos from './Host/HostVansPhotos';
 import HostReviews from './Host/HostReviews'
 import NotFound from './NotFound';
 import Login,{verifyUser} from './login';
-
+import Error from './Error';
 localStorage.removeItem('loggedin')
 import '../server'
 import { requireAuth } from '../Authorization';
@@ -27,8 +27,8 @@ let router =  createBrowserRouter(createRoutesFromElements(
     <Route path='/' element={<Layout/>}> 
     <Route index element={<Home/>}/>
     <Route path='About' element={<About/> }/>
-    <Route path='Vans' element={<Vans/>} loader={Loader}/>
-    <Route path='Vans/:id' element={<VansDetails/>} loader={vanLoader}/>
+    <Route path='Vans' element={<Vans/>} loader={Loader} errorElement={<Error/>}/>
+    <Route path='Vans/:id' element={<VansDetails/>} loader={vanLoader} errorElement={<Error/>}/>
     <Route path='Host' element={<HostLayout/>}>
       <Route index element={<Dashboard/>} loader={async ({request})=>await requireAuth(request)}/>
       <Route  path='Income'  element={<HostIncome/>} />
@@ -40,7 +40,7 @@ let router =  createBrowserRouter(createRoutesFromElements(
       </Route>      
       <Route  path='Reviews'  element={<HostReviews/>}/>
     </Route>
-    <Route path='Login'element={<Login/>} action={verifyUser}/>
+    <Route path='Login'element={<Login/>} action={verifyUser} errorElement={<Error/>}/>
     <Route path='Logout' element={<Logout/>}/>
     <Route path='*' element={<NotFound/>}/>
     </Route>

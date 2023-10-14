@@ -1,13 +1,17 @@
-import {Link, useLoaderData} from 'react-router-dom'
+import {Link, useLoaderData,defer,Await} from 'react-router-dom'
+import {Suspense } from  'react'
 import { getHostVans } from '../../api'
 import {requireAuth} from '../../Authorization'
 
 export async function HostVansLoader({request}){
     await requireAuth(request)
-    return getHostVans() 
+    return defer({hostVans:getHostVans()})
 }
+
 export default function Vans(){
-    let hostVans = useLoaderData()
+    let hostVansPromise = useLoaderData()
+
+    function renderHostVans(hostVans){
     const hostVansEls = hostVans.map(van => (
         <Link
             to={van.id}
@@ -21,9 +25,20 @@ export default function Vans(){
                 </div>
             </div>
         </Link>))
-    return(
-        <div className='flex flex-col gap-6 p-10 mb-40'>
+        return(
+            <div className='flex flex-col gap-6 p-10 mb-40'>
         {hostVansEls}
         </div>
+        )
+
+    }
+
+    return(
+        <Suspense fallback={<h4 className='text-3xl ml-5'>Loading your vans list</h4>}>
+        <Await resolve={hostVansPromise.hostVans}>
+            {renderHostVans}               
+        </Await>
+        </Suspense>
+        
     )
 }
