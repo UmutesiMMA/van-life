@@ -1,8 +1,8 @@
-import {getVans} from '../../api.js'
+import {getVan} from '../../api.js'
 import { useLoaderData, Link, useLocation} from 'react-router-dom'
 import colors from '../helper/colors.jsx'
 export function Loader({params}){
-    return getVans(params.id)
+    return getVan(params.id)
 }
 export default function VansDetails(){
     

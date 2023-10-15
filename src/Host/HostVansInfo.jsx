@@ -1,9 +1,13 @@
 import{Outlet, useLoaderData,NavLink} from 'react-router-dom'
-import { getHostVans } from '../../api'
+// import { getHostVans } from '../../api'
+import { getVan } from '../../api'
+
 import colors from '../helper/colors'
 
 export function hVansInfo ({params}){
-    return getHostVans(params.id)
+    // return getHostVans(params.id)
+    return getVan(params.id)
+
 }
 export default function HostVansInfo(){
     const activeStyle={

@@ -18,7 +18,7 @@ import NotFound from './NotFound';
 import Login,{verifyUser} from './login';
 import Error from './Error';
 localStorage.removeItem('loggedin')
-import '../server'
+// import '../server'
 import { requireAuth } from '../Authorization';
 import Logout from './logOut';
 
